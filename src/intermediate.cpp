@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>	// for using chap.086
+#include <regex>
 
 using namespace std ;
 
@@ -113,6 +114,54 @@ void Print(Pricess2 who)
 	// cout << "jungseo.father: " << who->father << endl ;
 	// cout << "jungseo.birthday: " << who->birthday << endl ;
 }
+
+// for using chap.090
+struct Data1
+{
+	Data1(int x) : number(x) {}
+	int number ;
+} ;
+
+// for using chap.090
+struct Data2
+{
+	Data2()
+	{
+		number = 10 ;
+	}
+	int number ;
+} data2 ;
+
+// for using chap.091
+struct Data091_1
+{
+	int number ;
+} ;
+
+// for using chap.091
+struct Data091_2
+{
+	Data091_1 data091_1 ;
+	int number ;
+} ;
+
+// for using chap.092
+struct Info{
+	string country ;
+	
+	struct Who
+	{
+		string name ;
+		string nickname ;
+	} who ;
+} ;
+
+
+
+
+
+
+
 
 
 int main()
@@ -316,13 +365,39 @@ int main()
 	// cout << Goryeo[1].birthday << endl ;
 	
 	
-	// 089 - 구조체를 함수 인자로 사용하기
-	jungseo.name = "정소공주" ;
-	jungseo.father = "조선 태종" ;
-	jungseo.birthday = "1412년" ;
+	// // 089 - 구조체를 함수 인자로 사용하기
+	// jungseo.name = "정소공주" ;
+	// jungseo.father = "조선 태종" ;
+	// jungseo.birthday = "1412년" ;
 	
-	Print(jungseo) ;
-	// Print(&jungseo) ;
+	// // 왜 구조체 주소를 인자로 넘기게 할까? 출력이면.. 그냥 구조체 자체를 넘겨도 되지 않나?
+	// Print(jungseo) ;
+	// // Print(&jungseo) ;
+	
+	
+	// // 090 - 구조체 초기화하는 방법1
+	// Data1 data1(2) ;
+	// cout << "Data1 number: " << data1.number << endl ;
+	// cout << "Data2 number: " << data2.number << endl ;
+	
+	
+	// // 091 - 구조체 초기화하는 방법2
+	// Data091_1 data091_1 = {} ;	// 구조체 내부 변수 모두를 초기화함. "int = 0"
+	// Data091_2 data091_2 {data091_1, 10 } ;	// 구조체 내부 변수 Data091_1, int 를 순서에 맞게 초기화함.
+	
+	// cout << "Data091_1 number: " << data091_2.data091_1.number << endl ;
+	// cout << "Data091_2 number: " << data091_2.number << endl ;
+	
+	
+	// 092 - 구조체 초기화하는 방법3
+	Info chuck = {"고려", {"장군 척준경", "소드마스터"}} ;
+	Info anjang = {"고구려", "안장왕 고흥왕", "한주 사랑"} ;
+	
+	cout << chuck.country << ", " << chuck.who.name << ", " << chuck.who.nickname << endl ;
+	cout << anjang.country << ", " << anjang.who.name << ", " << anjang.who.nickname << endl ;
+	
+
+	
 	
 	
 	
