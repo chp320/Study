@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>	// for using chap.086
 
 using namespace std ;
 
@@ -59,6 +60,60 @@ enum class MachineStatus : char
 	disconnect = 100,
 	close
 } ;
+
+// for using chap.085
+void Func085_1(int arr[2][2])
+{
+	// 2차원배열을 인자로 전달받아 Func085_1 내부적으로 0x0 에 값을 1000으로 변경함
+	// main 함수로 돌아갈 때는 값 변화 없음.
+	// => 헐. 값이 바뀌네요... -_-;; 배열을 인자로 받으며 실제 그 값을 변경 가능함..
+	arr[0][0] = 1000 ;
+}
+
+// for using chap.085
+void Func085_2 (int arr[][2], int row)
+{
+	// [row-2][1] 위치의 값을 2000으로 변경한다....
+	arr[row-2][1] = 2000 ;
+}
+
+// for using chap.085
+void Func085_3 (int *arr, int row, int col)
+{
+	// arr[0][0]에서 행/열 각각 1 / 1 씩 이동한 위치.. 즉 arr[1][1]의 값을 3000으로 변경함.
+	*((arr + row - 1) + col - 1) = 3000 ;
+}
+
+// for using chap.088
+struct Princess
+{
+	string name ;
+	string father ;
+	string birthday = "알 수 없음" ;
+} Goryeo[2] ;	// 구조체 배열
+
+// for using chap.089
+struct Pricess2
+{
+	string name ;
+	string father ;
+	string birthday ;
+} jungseo ;
+
+// for using chap.089
+// -> 책에서는... "구조체는 일반 변수처럼 다뤄지기 때문에 주소 번지 지정자 &를 사용하여 넘기고 받는 함수는 &를 이용합니다. 포인터이기 때문에 . 대신  -> 를 사용합니다."..
+//    라고 하는데... 그냥 구조체를 넘겨도 값 출력 되는데..? 왜 &를 통해서 주고 받도록 했지..? -_-;;
+void Print(Pricess2 who)
+// void Print(Pricess2 *who)
+{
+	cout << "jungseo.name: " << who.name << endl ;
+	cout << "jungseo.father: " << who.father << endl ;
+	cout << "jungseo.birthday: " << who.birthday << endl ;
+	// cout << "jungseo.name: " << who->name << endl ;
+	// cout << "jungseo.father: " << who->father << endl ;
+	// cout << "jungseo.birthday: " << who->birthday << endl ;
+}
+
 
 int main()
 {
@@ -136,16 +191,14 @@ int main()
 	*/
 	
 	
-	
+	/*	
 	// 080 - enum class 이해하기
 	// 아래 소스 컴파일 시 'MachineStatus' is not a class or namespace 라는 컴파일 에러가 발생한다.
 	// 이를 해결하기 위해 g++ 옵션에 "-std=c++11"를 추가하여야 함 (gcc가 5.x버전 이하라면 추가하여야 함 - scoped enums는 c++11에 추가되었음.)
 	// 출처: https://stackoverflow.com/a/45201081/10521400
-	/*
-		root@goorm:/workspace/Study(master)# g++ --version
-		g++ (Ubuntu 5.5.0-12ubuntu1~14.04) 5.5.0 20171010
-		-> 5.5 버전이구나~
-	*/
+		// root@goorm:/workspace/Study(master)# g++ --version
+		// g++ (Ubuntu 5.5.0-12ubuntu1~14.04) 5.5.0 20171010
+		// -> 5.5 버전이구나~
 	// goorm의 빌드/실행 옵션 문제인거 같은데...아무리 찾아보아도 모르겠음
 	// 실행script를 짜버림;;
 	// root@goorm:/workspace/Study(master)# g++ -std=c++11 /workspace/Study/src/intermediate.cpp -o /tmp/a.out && /tmp/a.out
@@ -161,6 +214,117 @@ int main()
 		cout << "Status: close" << endl ;
 	
 	cout << "machine: " << static_cast<int>(machine) << ", " << static_cast<char>(machine) << endl ;
+	*/	
+	
+	
+	// // 084 - 2차원 배열 사용하기
+	// int data1[2][2] = { 1, 2, 3 } ;		// 2x2 배열 선언. 1, 2, 3, 0 으로 초기화
+	// int data2[2][3] = { {1, } } ;		// 2x3 배열 선언. 1, 0, 0, 0, 0, 0 으로 초기화
+	
+	// cout << "data1[0][0] = " << data1[0][0] << endl ;
+	// cout << "data1[0][1] = " << data1[0][1] << endl ;
+	// cout << "data1[1][0] = " << data1[1][0] << endl ;
+	// cout << "data1[1][1] = " << data1[1][1] << endl ;
+	// cout << endl ;
+	// cout << "data2[0][0] = " << data2[0][0] << endl ;
+	// cout << "data2[0][1] = " << data2[0][1]+1 << endl ;	// 값에 1을 더함
+	// cout << "data2[0][2] = " << data2[0][2]+2 << endl ;	// 값에 2를 더함
+	// cout << "data2[1][0] = " << data2[1][0]+3 << endl ;	// 값에 3을 더함
+	// cout << "data2[1][1] = " << data2[1][1]+4 << endl ;	// 값에 4를 더함
+	// cout << "data2[1][2] = " << data2[1][2]+5 << endl ;	// 값에 5를 더함
+	
+	
+	// // 085 - 2차원 배열 함수 인자 사용하기
+	// int data[2][2] = { {1, 2}, {3, 4} } ;
+	
+	// Func085_1(data) ;
+	// Func085_2(data, 2) ;
+	// Func085_3(*data, 2, 2) ;
+	
+	// cout << "=== 결과 ===" << endl ;
+	// for(int i=0; i<2; i++)
+	// {
+	// 	for(int j=0; j<2; j++)
+	// 	{
+	// 		cout << data[i][j] << endl ;
+	// 	}
+	// }
+	
+	
+	// // 086 - 배열 일부 변경하기(fill: 시작위치~마지막위치까지, 수정값으로 대체)
+	// int data1[10] = { 0, } ;
+	// fill(data1, data1+3, 10) ;
+	// fill(data1+4, data1+8, 20) ;
+	
+	// cout << "=== data1 결과 ===" << endl ;
+	
+	// // 1차원 배열의 갯수를 구하려면.. 1) 해당 배열사이즈 확인 (byte로 계산됨) 2) 배열 type으로 나눔 (byte로 계산된 값을 type으로 나눠 갯수를 확인)
+	// for(int i=0; i<sizeof(data1)/sizeof(int); i++)
+	// 	cout << data1[i] << ", " ;
+	
+	// vector<int> data2({0, 1, 2, 3, 4, 5, 6, 7}) ;
+	// fill(data2.begin(), data2.begin()+3, 30) ;
+	// cout << endl << endl << "data2.size: " << data2.size() << endl << "=== data2 결과 ===" << endl ;
+	
+	// for(int i=0, size=data2.size(); i<size; i++)
+	// 	cout << data2.at(i) << ", ";
+	// cout << endl ;
+	
+	
+	// // 087 - 배열 일부 변경하기(fill_n: 시작위치~변경할 갯수, 수정할 값으로 대체. fill과의 차이점은 마지막위치가 아닌 변경할 갯수를 받는다는 것.)
+	// int data1[10] = { 0, } ;
+	// fill_n(data1, 2, 10) ;
+	// fill_n(data1+4, 3, 20) ;
+	
+	// cout << "=== data1 결과 ===" << endl ;
+	
+	// for(int i=0; i<sizeof(data1)/sizeof(int); i++)
+	// 	cout << data1[i] << ", " ;
+	
+	// vector<int> data2({0, 1, 2, 3, 4, 5, 6, 7}) ;
+	// fill_n(data2.begin(), data2.size()-1, 30) ;
+	// fill_n(data2.begin(), 4, 40) ;
+	// cout << endl << endl << "data2.size: " << data2.size() << endl << "=== data2 결과 ===" << endl ;
+	
+	// for(int i=0, size=data2.size(); i<size; i++)
+	// 	cout << data2.at(i) << ", " ;
+	// cout << endl ;
+	
+	
+	// // 088 - 구조체 사용하기(struct)
+	// Princess jungmyung ;
+	// jungmyung.name = "정명공주" ;
+	// jungmyung.father = "조선 선조" ;
+	// jungmyung.birthday = "1603년 6월 27일" ;
+	
+	// Goryeo[0].name = "선정왕후" ;
+	// Goryeo[0].father = "고려 성종" ;
+	// Goryeo[1].name = "효정공주" ;
+	// Goryeo[1].father = "고려 현종" ;
+	
+	// cout << "=== 조선 공주 ===" << endl ;
+	// cout << jungmyung.name << endl ;
+	// cout << jungmyung.father << endl ;
+	// cout << jungmyung.birthday << endl ;
+	
+	// cout << "=== 고려 공주 ===" << endl ;
+	// cout << Goryeo[0].name << endl ;
+	// cout << Goryeo[0].father << endl ;
+	// cout << Goryeo[0].birthday << endl << endl ;
+	// cout << Goryeo[1].name << endl ;
+	// cout << Goryeo[1].father << endl ;
+	// cout << Goryeo[1].birthday << endl ;
+	
+	
+	// 089 - 구조체를 함수 인자로 사용하기
+	jungseo.name = "정소공주" ;
+	jungseo.father = "조선 태종" ;
+	jungseo.birthday = "1412년" ;
+	
+	Print(jungseo) ;
+	// Print(&jungseo) ;
+	
+	
 	
 	
 	
